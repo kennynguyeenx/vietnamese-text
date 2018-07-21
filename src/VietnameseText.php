@@ -42,73 +42,127 @@ class VietnameseText
                                                 'ữ', 'ỳ', 'ý', 'ỵ', 'ỷ', 'ỹ', 'đ'];
 
     /**
-     * @param string $text
+     * @param string $string
      * @return string
      */
-    private function trimText(string $text): string
+    private function trimString(string $string): string
     {
-        $text = preg_replace('/\p{C}+/u', "", $text);
-        return trim($text);
+        $string = preg_replace('/\p{C}+/u', "", $string);
+        return trim($string);
     }
 
     /**
-     * @param string $text
+     * @param string $string
      * @return string
      */
-    private function normalize(string $text): string
+    private function normalize(string $string): string
     {
-        $text = Normalizer::normalize($text, Normalizer::FORM_C);
-        $text = preg_replace(
+        $string = Normalizer::normalize($string, Normalizer::FORM_C);
+        $string = preg_replace(
             "/(\t|\n|\v|\f|\r| |\xC2\x85|\xc2\xa0|\xe1\xa0\x8e|\xe2\x80[\x80-\x8D]|\xe2\x80\xa8|\xe2\x80\xa9|\xe2\x80\xaF|" 
           . "\xe2\x81\x9f|\xe2\x81\xa0|\xe3\x80\x80|\xef\xbb\xbf)+/",
             " ",
-            $text
+            $string
         );
-        return $text;
+        return $string;
     }
     
     /**
-     * @param string $text
+     * @param string $string
      * @return string
      */
-    private function filter(string $text): string
+    private function filter(string $string): string
     {
-        $text = $this->normalize($text);
-        $text = $this->trimText($text);
-        return $text;
+        $string = $this->normalize($string);
+        $string = $this->trimString($string);
+        return $string;
     }
 
     /**
-     * @param string $text
+     * @param string $string
      * @return string
      */
-    public function strToLowerCase(string $text): string
+    public function strToLowerCase(string $string): string
     {
-        $text = $this->filter($text);
-        $text = strtolower($text);
+        $string = $this->filter($string);
+        $string = strtolower($string);
         $numCharacter = count($this->upperCaseVietnameseCharacters);
         for ($i = 0; $i < $numCharacter; ++$i) {
-            $text = preg_replace('/(' . $this->upperCaseVietnameseCharacters[$i] .')/u',
-                $this->lowerCaseVietnameseCharacters[$i], $text);
+            $string = preg_replace('/(' . $this->upperCaseVietnameseCharacters[$i] .')/u',
+                $this->lowerCaseVietnameseCharacters[$i], $string);
         }
 
-        return $text;
+        return $string;
     }
 
     /**
-     * @param string $text
+     * @param string $string
      * @return string
      */
-    public function strToUpperCase(string $text): string
+    public function strToUpperCase(string $string): string
     {
-        $text = $this->filter($text);
-        $text = strtoupper($text);
+        $string = $this->filter($string);
+        $string = strtoupper($string);
         $numCharacter = count($this->lowerCaseVietnameseCharacters);
         for ($i = 0; $i < $numCharacter; ++$i) {
-            $text = preg_replace('/(' . $this->lowerCaseVietnameseCharacters[$i] .')/u',
-                $this->upperCaseVietnameseCharacters[$i], $text);
+            $string = preg_replace('/(' . $this->lowerCaseVietnameseCharacters[$i] .')/u',
+                $this->upperCaseVietnameseCharacters[$i], $string);
         }
 
-        return $text;
+        return $string;
+    }
+
+    /**
+     * @param string $string
+     * @return int
+     */
+    public function strLen(string $string): int
+    {
+        return mb_strlen($string, 'UTF-8');
+    }
+
+    /**
+     * @param string $string
+     * @return string
+     */
+    public function strRev(string $string): string
+    {
+        preg_match_all('/./u', $string, $matches);
+        return implode('', array_reverse($matches[0]));
+    }
+
+    /**
+     * @param string $string
+     * @param int $length
+     * @return array|false
+     */
+    public function strSplit(string $string, int $length = 1)
+    {
+        if ($length == 1) {
+            return preg_split('//u', $string, -1, PREG_SPLIT_NO_EMPTY);
+        }
+
+        if ($length > 1) {
+            $stringLength = $this->strLen($string);
+            $resultArray = [];
+            for ($i = 0; $i < $stringLength; $i+=$length) {
+                $resultArray[] = mb_substr($string, $i, $length, 'UTF-8');
+            }
+
+            return $resultArray;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $string
+     * @return string
+     */
+    public function upperCaseFirst(string $string): string
+    {
+        $charArray = $this->strSplit($string);
+        $charArray[0] = $this->strToUpperCase($charArray[0]);
+        return implode('', $charArray);
     }
 }

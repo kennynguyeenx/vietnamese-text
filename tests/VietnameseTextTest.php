@@ -35,7 +35,7 @@ class VietnameseTextTest extends \PHPUnit_Framework_TestCase
   
     /**
      * @test
-     * @covers Kennynguyeenx\VietnameseText\VietnameseText::strToLowerCase()
+     * @covers \Kennynguyeenx\VietnameseText\VietnameseText::strToLowerCase()
      */
     public function strToLowerCase()
     {
@@ -46,12 +46,52 @@ class VietnameseTextTest extends \PHPUnit_Framework_TestCase
   
     /**
      * @test
-     * @covers Kennynguyeenx\VietnameseText\VietnameseText::strToUpperCase()
+     * @covers \Kennynguyeenx\VietnameseText\VietnameseText::strToUpperCase()
      */
     public function strToUpperCase()
     {
         $this->assertEquals('XIN CHÀO CÁC BẠN', $this->vietnameseText->strToUpperCase('xin chào các bạn'));
         $this->assertEquals('XIN CHÀO CÁC BẠN', $this->vietnameseText->strToUpperCase('Xin Chào Các Bạn'));
         $this->assertEquals('XIN CHÀO CÁC BẠN', $this->vietnameseText->strToUpperCase('XIN CHÀO CÁC BẠN'));
+    }
+
+    /**
+     * @test
+     * @covers \Kennynguyeenx\VietnameseText\VietnameseText::strLen()
+     */
+    public function strLen()
+    {
+        $this->assertEquals(16, $this->vietnameseText->strLen('xin chào các bạn'));
+    }
+
+    /**
+     * @test
+     * @covers \Kennynguyeenx\VietnameseText\VietnameseText::strRev()
+     */
+    public function strRev()
+    {
+        $this->assertEquals('oàhc nix', $this->vietnameseText->strRev('xin chào'));
+        $this->assertEquals('oàhC niX', $this->vietnameseText->strRev('Xin Chào'));
+        $this->assertEquals('OÀHC NIX', $this->vietnameseText->strRev('XIN CHÀO'));
+    }
+
+    /**
+     * @test
+     * @covers \Kennynguyeenx\VietnameseText\VietnameseText::strSplit()
+     */
+    public function strSplit()
+    {
+        $this->assertEquals(['x', 'i', 'n' , ' ', 'c', 'h', 'à', 'o'], $this->vietnameseText->strSplit('xin chào'));
+    }
+
+    /**
+     * @test
+     * @covers \Kennynguyeenx\VietnameseText\VietnameseText::upperCaseFirst()
+     */
+    public function upperCaseFirst()
+    {
+        $this->assertEquals('Xin chào', $this->vietnameseText->upperCaseFirst('xin chào'));
+        $this->assertEquals('Đại biểu', $this->vietnameseText->upperCaseFirst('đại biểu'));
+        $this->assertEquals('Ối a', $this->vietnameseText->upperCaseFirst('ối a'));
     }
 }
