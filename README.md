@@ -8,6 +8,10 @@ Features
 
 - Make a Vietnamese string uppercase
 - Make a Vietnamese string lowercase
+- Get Vietnamese string length
+- Reverse a Vietnamese string
+- Convert a Vietnamese string to an array
+- Make a Vietnamese string's first character uppercase
 - No external dependencies.
 - PSR-4 compatible.
 - Compatible with PHP >= PHP 7.
