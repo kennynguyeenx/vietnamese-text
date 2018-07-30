@@ -82,6 +82,8 @@ class VietnameseTextTest extends \PHPUnit_Framework_TestCase
     public function strSplit()
     {
         $this->assertEquals(['x', 'i', 'n' , ' ', 'c', 'h', 'à', 'o'], $this->vietnameseText->strSplit('xin chào'));
+        $this->assertEquals(['xi', 'n ', 'ch', 'ào'], $this->vietnameseText->strSplit('xin chào', 2));
+        $this->assertEquals(['xin chào'], $this->vietnameseText->strSplit('xin chào', 10));
     }
 
     /**
