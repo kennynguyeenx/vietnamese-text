@@ -86,8 +86,11 @@ class VietnameseText
         $string = strtolower($string);
         $numCharacter = count($this->upperCaseVietnameseCharacters);
         for ($i = 0; $i < $numCharacter; ++$i) {
-            $string = preg_replace('/(' . $this->upperCaseVietnameseCharacters[$i] .')/u',
-                $this->lowerCaseVietnameseCharacters[$i], $string);
+            $string = preg_replace(
+                '/(' . $this->upperCaseVietnameseCharacters[$i] .')/u',
+                $this->lowerCaseVietnameseCharacters[$i],
+                $string
+            );
         }
 
         return $string;
@@ -103,8 +106,11 @@ class VietnameseText
         $string = strtoupper($string);
         $numCharacter = count($this->lowerCaseVietnameseCharacters);
         for ($i = 0; $i < $numCharacter; ++$i) {
-            $string = preg_replace('/(' . $this->lowerCaseVietnameseCharacters[$i] .')/u',
-                $this->upperCaseVietnameseCharacters[$i], $string);
+            $string = preg_replace(
+                '/(' . $this->lowerCaseVietnameseCharacters[$i] .')/u',
+                $this->upperCaseVietnameseCharacters[$i],
+                $string
+            );
         }
 
         return $string;
