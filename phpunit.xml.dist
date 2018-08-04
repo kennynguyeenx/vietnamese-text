@@ -1,6 +1,6 @@
 <phpunit bootstrap="vendor/autoload.php" colors="true">
     <testsuites>
-        <testsuite name="Vietnamese/vietnameseText Test Suite">
+        <testsuite name="VietnameseText Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

@@ -1,5 +1,5 @@
 {
-    "name": "kennynguyeenx/VietnameseText",
+    "name": "kennynguyeenx/vietnamese-text",
     "type": "library",
     "description": "Provide some Vietnamese string handling and manipulating functions.",
     "keywords": ["vietnamese", "text"],

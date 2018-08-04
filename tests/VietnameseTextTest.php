@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of kennynguyeenx/VietnameseText.
+ * This file is part of kennynguyeenx/vietnamese-text.
  *
  * (c) Kenny Nguyen <kennynguyeenx@gmail.com>
  *
