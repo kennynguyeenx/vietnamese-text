@@ -43,7 +43,7 @@ class VietnameseText
      * @param string $string
      * @return string
      */
-    private function trimString(string $string): string
+    public function trimString(string $string): string
     {
         $string = preg_replace('/\p{C}+/u', "", $string);
         return trim($string);
@@ -53,7 +53,7 @@ class VietnameseText
      * @param string $string
      * @return string
      */
-    private function normalize(string $string): string
+    public function normalize(string $string): string
     {
         $string = Normalizer::normalize($string, Normalizer::FORM_C);
         $string = preg_replace(
