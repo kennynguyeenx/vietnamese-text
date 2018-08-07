@@ -69,7 +69,7 @@ class VietnameseText
      * @param string $string
      * @return string
      */
-    private function filter(string $string): string
+    public function filter(string $string): string
     {
         $string = $this->normalize($string);
         $string = $this->trimString($string);
