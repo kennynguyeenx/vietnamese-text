@@ -24,22 +24,6 @@ use Normalizer;
 class VietnameseText
 {
     /**
-     * @var array
-     */
-    private $upperCaseVietnameseCharacters = ['À', 'Á', 'Ạ', 'Ả', 'Ã', 'Â', 'Ầ', 'Ấ', 'Ậ', 'Ẩ', 'Ẫ', 'Ă', 'Ằ', 'Ắ',
-        'Ặ', 'Ẳ', 'Ẵ', 'È', 'É', 'Ẹ', 'Ẻ', 'Ẽ', 'Ê', 'Ề', 'Ế', 'Ệ', 'Ể', 'Ễ', 'Ì', 'Í', 'Ị', 'Ỉ', 'Ĩ', 'Ò', 'Ó', 'Ọ',
-        'Ỏ', 'Õ', 'Ô', 'Ồ', 'Ố', 'Ộ', 'Ổ', 'Ỗ', 'Ơ', 'Ờ', 'Ớ', 'Ợ', 'Ở', 'Ỡ', 'Ù', 'Ú', 'Ụ', 'Ủ', 'Ũ', 'Ư', 'Ừ',
-        'Ứ', 'Ự', 'Ử', 'Ữ', 'Ỳ', 'Ý', 'Ỵ', 'Ỷ', 'Ỹ', 'Đ'];
-
-    /**
-     * @var array
-     */
-    private $lowerCaseVietnameseCharacters = ['à', 'á', 'ạ', 'ả', 'ã', 'â', 'ầ', 'ấ', 'ậ', 'ẩ', 'ẫ', 'ă', 'ằ', 'ắ',
-        'ặ', 'ẳ', 'ẵ', 'è', 'é', 'ẹ', 'ẻ', 'ẽ', 'ê', 'ề', 'ế', 'ệ', 'ể', 'ễ', 'ì', 'í', 'ị', 'ỉ', 'ĩ', 'ò', 'ó', 'ọ',
-        'ỏ', 'õ', 'ô', 'ồ', 'ố', 'ộ', 'ổ', 'ỗ', 'ơ', 'ờ', 'ớ', 'ợ', 'ở', 'ỡ', 'ù', 'ú', 'ụ', 'ủ', 'ũ', 'ư', 'ừ', 'ứ',
-        'ự', 'ử', 'ữ', 'ỳ', 'ý', 'ỵ', 'ỷ', 'ỹ', 'đ'];
-
-    /**
      * @param string $string
      * @return string
      */
@@ -83,16 +67,7 @@ class VietnameseText
     public function strToLowerCase(string $string): string
     {
         $string = $this->filter($string);
-        $string = strtolower($string);
-        $numCharacter = count($this->upperCaseVietnameseCharacters);
-        for ($i = 0; $i < $numCharacter; ++$i) {
-            $string = preg_replace(
-                '/(' . $this->upperCaseVietnameseCharacters[$i] .')/u',
-                $this->lowerCaseVietnameseCharacters[$i],
-                $string
-            );
-        }
-
+        $string = mb_strtolower($string);
         return $string;
     }
 
@@ -103,16 +78,7 @@ class VietnameseText
     public function strToUpperCase(string $string): string
     {
         $string = $this->filter($string);
-        $string = strtoupper($string);
-        $numCharacter = count($this->lowerCaseVietnameseCharacters);
-        for ($i = 0; $i < $numCharacter; ++$i) {
-            $string = preg_replace(
-                '/(' . $this->lowerCaseVietnameseCharacters[$i] .')/u',
-                $this->upperCaseVietnameseCharacters[$i],
-                $string
-            );
-        }
-
+        $string = mb_strtoupper($string);
         return $string;
     }
 
