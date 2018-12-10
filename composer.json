@@ -1,6 +1,7 @@
 {
     "name": "kennynguyeenx/vietnamese-text",
     "type": "library",
+    "version": "1.2",
     "description": "Provide some Vietnamese string handling and manipulating functions.",
     "keywords": ["vietnamese", "text"],
     "license": "MIT",
