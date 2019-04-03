@@ -99,3 +99,11 @@ use Kennynguyeenx\VietnameseText\VietnameseText;
 $vietnameseText = new VietnameseText();
 echo $vietnameseText->upperCaseFirst('đại biểu'); // Đại biểu
 ```
+Convert a Vietnamese string to a Latin string:
+
+```php
+use Kennynguyeenx\VietnameseText\VietnameseText;
+
+$vietnameseText = new VietnameseText();
+echo $vietnameseText->upperCaseFirst('đại biểu'); // dai bieu
+```
