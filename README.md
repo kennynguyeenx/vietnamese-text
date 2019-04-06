@@ -12,6 +12,7 @@ Features
 - Reverse a Vietnamese string
 - Convert a Vietnamese string to an array
 - Make a Vietnamese string's first character uppercase
+- Convert a Vietnamese string to a Latin string
 - No external dependencies.
 - PSR-4 compatible.
 - Compatible with PHP >= PHP 7.
