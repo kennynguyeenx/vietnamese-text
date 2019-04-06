@@ -44,6 +44,8 @@ class VietnameseTextTest extends PHPUnit_Framework_TestCase
         Assert::assertEquals('xin chào các bạn', $this->vietnameseText->strToLowerCase('xin chào các bạn'));
         Assert::assertEquals('xin chào các bạn', $this->vietnameseText->strToLowerCase('Xin Chào Các Bạn'));
         Assert::assertEquals('xin chào các bạn', $this->vietnameseText->strToLowerCase('XIN CHÀO CÁC BẠN'));
+        // Combining Acute Accent
+        Assert::assertEquals('áo', $this->vietnameseText->strToLowerCase('Áo'));
     }
   
     /**
@@ -55,6 +57,8 @@ class VietnameseTextTest extends PHPUnit_Framework_TestCase
         Assert::assertEquals('XIN CHÀO CÁC BẠN', $this->vietnameseText->strToUpperCase('xin chào các bạn'));
         Assert::assertEquals('XIN CHÀO CÁC BẠN', $this->vietnameseText->strToUpperCase('Xin Chào Các Bạn'));
         Assert::assertEquals('XIN CHÀO CÁC BẠN', $this->vietnameseText->strToUpperCase('XIN CHÀO CÁC BẠN'));
+        // Combining Acute Accent
+        Assert::assertEquals('ÁO', $this->vietnameseText->strToUpperCase('áo'));
     }
 
     /**
@@ -64,6 +68,8 @@ class VietnameseTextTest extends PHPUnit_Framework_TestCase
     public function strLen()
     {
         Assert::assertEquals(16, $this->vietnameseText->strLen('xin chào các bạn'));
+        // Combining Acute Accent
+        Assert::assertEquals(2, $this->vietnameseText->strLen('áo'));
     }
 
     /**
@@ -75,6 +81,8 @@ class VietnameseTextTest extends PHPUnit_Framework_TestCase
         Assert::assertEquals('oàhc nix', $this->vietnameseText->strRev('xin chào'));
         Assert::assertEquals('oàhC niX', $this->vietnameseText->strRev('Xin Chào'));
         Assert::assertEquals('OÀHC NIX', $this->vietnameseText->strRev('XIN CHÀO'));
+        // Combining Acute Accent
+        Assert::assertEquals('oá', $this->vietnameseText->strRev('áo'));
     }
 
     /**
@@ -86,6 +94,8 @@ class VietnameseTextTest extends PHPUnit_Framework_TestCase
         Assert::assertEquals(['x', 'i', 'n' , ' ', 'c', 'h', 'à', 'o'], $this->vietnameseText->strSplit('xin chào'));
         Assert::assertEquals(['xi', 'n ', 'ch', 'ào'], $this->vietnameseText->strSplit('xin chào', 2));
         Assert::assertEquals(['xin chào'], $this->vietnameseText->strSplit('xin chào', 10));
+        // Combining Acute Accent
+        Assert::assertEquals(['á', 'o'], $this->vietnameseText->strSplit('áo'));
     }
 
     /**
@@ -97,5 +107,20 @@ class VietnameseTextTest extends PHPUnit_Framework_TestCase
         Assert::assertEquals('Xin chào', $this->vietnameseText->upperCaseFirst('xin chào'));
         Assert::assertEquals('Đại biểu', $this->vietnameseText->upperCaseFirst('đại biểu'));
         Assert::assertEquals('Ối a', $this->vietnameseText->upperCaseFirst('ối a'));
+        // Combining Acute Accent
+        Assert::assertEquals('Áo dài', $this->vietnameseText->upperCaseFirst('áo dài'));
+    }
+
+    /**
+     * @test
+     * @covers \Kennynguyeenx\VietnameseText\VietnameseText::convertToLatin()
+     */
+    public function convertToLatin()
+    {
+        Assert::assertEquals('Xin chao', $this->vietnameseText->convertToLatin('Xin chào'));
+        Assert::assertEquals('Dai bieu', $this->vietnameseText->convertToLatin('Đại biểu'));
+        Assert::assertEquals('Oi a', $this->vietnameseText->convertToLatin('Ối a'));
+        // Combining Acute Accent
+        Assert::assertEquals('Ao', $this->vietnameseText->convertToLatin('Áo'));
     }
 }

@@ -88,6 +88,7 @@ class VietnameseText
      */
     public function strLen(string $string): int
     {
+        $string = $this->filter($string);
         return mb_strlen($string, 'UTF-8');
     }
 
@@ -97,6 +98,7 @@ class VietnameseText
      */
     public function strRev(string $string): string
     {
+        $string = $this->filter($string);
         preg_match_all('/./u', $string, $matches);
         return implode('', array_reverse($matches[0]));
     }
@@ -108,6 +110,7 @@ class VietnameseText
      */
     public function strSplit(string $string, int $length = 1)
     {
+        $string = $this->filter($string);
         if ($length == 1) {
             return preg_split('//u', $string, -1, PREG_SPLIT_NO_EMPTY);
         }
@@ -131,6 +134,7 @@ class VietnameseText
      */
     public function upperCaseFirst(string $string): string
     {
+        $string = $this->filter($string);
         $charArray = $this->strSplit($string);
         $charArray[0] = $this->strToUpperCase($charArray[0]);
         return implode('', $charArray);
@@ -142,8 +146,10 @@ class VietnameseText
      */
     public function convertToLatin(string $string): string
     {
-        if (empty($string))
+        $string = $this->filter($string);
+        if (empty($string)) {
             return $string;
+        }
 
         $string = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $string);
         $string = preg_replace("/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/", 'e', $string);
@@ -162,6 +168,5 @@ class VietnameseText
         $string = preg_replace("/(Đ)/", 'D', $string);
 
         return $string;
-        
     }
 }
