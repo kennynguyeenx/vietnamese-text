@@ -34,93 +34,183 @@ class VietnameseTextTest extends PHPUnit_Framework_TestCase
     {
         $this->vietnameseText = new VietnameseText();
     }
-  
+
     /**
      * @test
      * @covers \Kennynguyeenx\VietnameseText\VietnameseText::strToLowerCase()
+     * @param string $originalString
+     * @param string $expectedString
+     * @dataProvider strToLowerCaseDataProvider
      */
-    public function strToLowerCase()
+    public function strToLowerCase(string $originalString, string $expectedString)
     {
-        Assert::assertEquals('xin chào các bạn', $this->vietnameseText->strToLowerCase('xin chào các bạn'));
-        Assert::assertEquals('xin chào các bạn', $this->vietnameseText->strToLowerCase('Xin Chào Các Bạn'));
-        Assert::assertEquals('xin chào các bạn', $this->vietnameseText->strToLowerCase('XIN CHÀO CÁC BẠN'));
-        // Combining Acute Accent
-        Assert::assertEquals('áo', $this->vietnameseText->strToLowerCase('Áo'));
+        Assert::assertSame($expectedString, $this->vietnameseText->strToLowerCase($originalString));
     }
-  
+
+    /**
+     * @return array
+     */
+    public function strToLowerCaseDataProvider(): array
+    {
+        return [
+            'lowercase_with_accent' => ['xin chào các bạn', 'xin chào các bạn'],
+            'uppercase_first_letter_of_word_with_accent' => ['Xin Chào Các Bạn', 'xin chào các bạn'],
+            'uppercase_with_accent' => ['XIN CHÀO CÁC BẠN', 'xin chào các bạn'],
+            'combine_acute_accent' => ['Áo', 'áo']
+        ];
+    }
+
+
     /**
      * @test
      * @covers \Kennynguyeenx\VietnameseText\VietnameseText::strToUpperCase()
+     * @param string $originalString
+     * @param string $expectedString
+     * @dataProvider strToUpperCaseDataProvider
      */
-    public function strToUpperCase()
+    public function strToUpperCase(string $originalString, string $expectedString)
     {
-        Assert::assertEquals('XIN CHÀO CÁC BẠN', $this->vietnameseText->strToUpperCase('xin chào các bạn'));
-        Assert::assertEquals('XIN CHÀO CÁC BẠN', $this->vietnameseText->strToUpperCase('Xin Chào Các Bạn'));
-        Assert::assertEquals('XIN CHÀO CÁC BẠN', $this->vietnameseText->strToUpperCase('XIN CHÀO CÁC BẠN'));
-        // Combining Acute Accent
-        Assert::assertEquals('ÁO', $this->vietnameseText->strToUpperCase('áo'));
+        Assert::assertSame($expectedString, $this->vietnameseText->strToUpperCase($originalString));
+    }
+
+    /**
+     * @return array
+     */
+    public function strToUpperCaseDataProvider(): array
+    {
+        return [
+            'uppercase_with_accent' => ['XIN CHÀO CÁC BẠN', 'XIN CHÀO CÁC BẠN'],
+            'uppercase_first_letter_of_word_with_accent' => ['Xin Chào Các Bạn', 'XIN CHÀO CÁC BẠN'],
+            'lowercase_with_accent' => ['xin chào các bạn', 'XIN CHÀO CÁC BẠN'],
+            'combine_acute_accent' => ['áo', 'ÁO']
+        ];
     }
 
     /**
      * @test
      * @covers \Kennynguyeenx\VietnameseText\VietnameseText::strLen()
+     * @param string $originalString
+     * @param int $expectedLength
+     * @dataProvider strLenDataProvider
      */
-    public function strLen()
+    public function strLen(string $originalString, int $expectedLength)
     {
-        Assert::assertEquals(16, $this->vietnameseText->strLen('xin chào các bạn'));
-        // Combining Acute Accent
-        Assert::assertEquals(2, $this->vietnameseText->strLen('áo'));
+        Assert::assertSame($expectedLength, $this->vietnameseText->strLen($originalString));
+    }
+
+    /**
+     * @return array
+     */
+    public function strLenDataProvider(): array
+    {
+        return [
+            'string_with_accent' => ['xin chào các bạn', 16],
+            'combine_acute_accent' => ['áo', 2]
+        ];
     }
 
     /**
      * @test
      * @covers \Kennynguyeenx\VietnameseText\VietnameseText::strRev()
+     * @param string $originalString
+     * @param string $expectedString
+     * @dataProvider strRevDataProvider
      */
-    public function strRev()
+    public function strRev(string $originalString, string $expectedString)
     {
-        Assert::assertEquals('oàhc nix', $this->vietnameseText->strRev('xin chào'));
-        Assert::assertEquals('oàhC niX', $this->vietnameseText->strRev('Xin Chào'));
-        Assert::assertEquals('OÀHC NIX', $this->vietnameseText->strRev('XIN CHÀO'));
-        // Combining Acute Accent
-        Assert::assertEquals('oá', $this->vietnameseText->strRev('áo'));
+        Assert::assertSame($expectedString, $this->vietnameseText->strRev($originalString));
+    }
+
+    /**
+     * @return array
+     */
+    public function strRevDataProvider(): array
+    {
+        return [
+            'lowercase_with_accent' => ['xin chào', 'oàhc nix'],
+            'uppercase_first_letter_of_word_with_accent' => ['Xin Chào', 'oàhC niX'],
+            'uppercase_with_accent' => ['XIN CHÀO', 'OÀHC NIX'],
+            'combine_acute_accent' => ['áo', 'oá']
+        ];
     }
 
     /**
      * @test
      * @covers \Kennynguyeenx\VietnameseText\VietnameseText::strSplit()
+     * @param string $originalString
+     * @param int $length
+     * @param array $expectedArray
+     * @dataProvider strSplitDataProvider
      */
-    public function strSplit()
+    public function strSplit(string $originalString, int $length, array $expectedArray)
     {
-        Assert::assertEquals(['x', 'i', 'n' , ' ', 'c', 'h', 'à', 'o'], $this->vietnameseText->strSplit('xin chào'));
-        Assert::assertEquals(['xi', 'n ', 'ch', 'ào'], $this->vietnameseText->strSplit('xin chào', 2));
-        Assert::assertEquals(['xin chào'], $this->vietnameseText->strSplit('xin chào', 10));
-        // Combining Acute Accent
-        Assert::assertEquals(['á', 'o'], $this->vietnameseText->strSplit('áo'));
+        Assert::assertSame($expectedArray, $this->vietnameseText->strSplit($originalString, $length));
+    }
+
+    /**
+     * @return array
+     */
+    public function strSplitDataProvider(): array
+    {
+        return [
+            'lowercase_with_accent_length_1' => ['xin chào', 1, ['x', 'i', 'n' , ' ', 'c', 'h', 'à', 'o']],
+            'lowercase_with_accent_less_than_max_length' => ['xin chào', 2, ['xi', 'n ', 'ch', 'ào']],
+            'lowercase_with_accent_more_than_max_length' => ['xin chào', 10, ['xin chào']],
+            'combine_acute_accent' => ['áo', 1, ['á', 'o']]
+        ];
     }
 
     /**
      * @test
      * @covers \Kennynguyeenx\VietnameseText\VietnameseText::upperCaseFirst()
+     * @param string $originalString
+     * @param string $expectedString
+     * @dataProvider upperCaseFirstDataProvider
      */
-    public function upperCaseFirst()
+    public function upperCaseFirst(string $originalString, string $expectedString)
     {
         Assert::assertEquals('Xin chào', $this->vietnameseText->upperCaseFirst('xin chào'));
         Assert::assertEquals('Đại biểu', $this->vietnameseText->upperCaseFirst('đại biểu'));
         Assert::assertEquals('Ối a', $this->vietnameseText->upperCaseFirst('ối a'));
         // Combining Acute Accent
-        Assert::assertEquals('Áo dài', $this->vietnameseText->upperCaseFirst('áo dài'));
+        Assert::assertSame($expectedString, $this->vietnameseText->upperCaseFirst($originalString));
+    }
+
+    /**
+     * @return array
+     */
+    public function upperCaseFirstDataProvider(): array
+    {
+        return [
+            'lowercase_with_accent' => ['xin chào', 'Xin chào'],
+            'lowercase_with_đ' => ['đại biểu', 'Đại biểu'],
+            'lowercase_with_ố' => ['ối a', 'Ối a'],
+            'combine_acute_accent' => ['áo dài', 'Áo dài']
+        ];
     }
 
     /**
      * @test
      * @covers \Kennynguyeenx\VietnameseText\VietnameseText::convertToLatin()
+     * @param string $originalString
+     * @param $expectedString
+     * @dataProvider convertToLatinDataProvider
      */
-    public function convertToLatin()
+    public function convertToLatin(string $originalString, $expectedString)
     {
-        Assert::assertEquals('Xin chao', $this->vietnameseText->convertToLatin('Xin chào'));
-        Assert::assertEquals('Dai bieu', $this->vietnameseText->convertToLatin('Đại biểu'));
-        Assert::assertEquals('Oi a', $this->vietnameseText->convertToLatin('Ối a'));
-        // Combining Acute Accent
-        Assert::assertEquals('Ao', $this->vietnameseText->convertToLatin('Áo'));
+        Assert::assertSame($expectedString, $this->vietnameseText->convertToLatin($originalString));
+    }
+
+    /**
+     * @return array
+     */
+    public function convertToLatinDataProvider(): array
+    {
+        return [
+            'uppercase_first_letter_with_accent' => ['Xin chào', 'Xin chao'],
+            'uppercase_first_letter_with_đ' => ['Đại biểu', 'Dai bieu'],
+            'uppercase_first_letter_with_ố' => ['Ối a', 'Oi a'],
+            'combine_acute_accent' => ['Áo', 'Ao']
+        ];
     }
 }
