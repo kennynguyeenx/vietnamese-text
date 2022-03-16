@@ -6,6 +6,7 @@ kennynguyeenx/vietnamese-text
 Features
 --------
 
+- Filter a Vietnamese string
 - Make a Vietnamese string uppercase
 - Make a Vietnamese string lowercase
 - Get Vietnamese string length
@@ -30,6 +31,15 @@ More information can be found in the [PHP documentation](http://php.net/manual/e
 
 Usage
 -----
+
+Filter a Vietnamese string:
+
+```php
+use Kennynguyeenx\VietnameseText\VietnameseText;
+
+$vietnameseText = new VietnameseText();
+echo $vietnameseText->filter(' áo  ' . PHP_EOL . 'dài '); // áo dài
+```
 
 Make a Vietnamese string lowercase:
 
@@ -106,5 +116,5 @@ Convert a Vietnamese string to a Latin string:
 use Kennynguyeenx\VietnameseText\VietnameseText;
 
 $vietnameseText = new VietnameseText();
-echo $vietnameseText->upperCaseFirst('đại biểu'); // dai bieu
+echo $vietnameseText->convertToLatin('đại biểu'); // dai bieu
 ```

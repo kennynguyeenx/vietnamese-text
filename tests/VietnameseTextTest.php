@@ -37,6 +37,33 @@ class VietnameseTextTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @covers \Kennynguyeenx\VietnameseText\VietnameseText::filter()
+     * @param string $originalString
+     * @param string $expectedString
+     * @dataProvider filterDataProvider
+     */
+    public function filter(string $originalString, string $expectedString)
+    {
+        Assert::assertSame($expectedString, $this->vietnameseText->filter($originalString));
+    }
+
+    /**
+     * @return array
+     */
+    public function filterDataProvider(): array
+    {
+        return [
+            'special_characters_for_white_spaces' => [' xin ' . PHP_EOL . 'chào ', 'xin chào'],
+            'multiple_white_spaces' => [' xin   chào ', 'xin chào'],
+            'white_spaces_at_both_sides' => [' xin chào ', 'xin chào'],
+            'white_spaces_at_the_end_of_string' => ['đại biểu ', 'đại biểu'],
+            'white_spaces_at_the_beginning_of_string' => [' ối a', 'ối a'],
+            'combine_acute_accent' => ['áo dài', 'áo dài']
+        ];
+    }
+
+    /**
+     * @test
      * @covers \Kennynguyeenx\VietnameseText\VietnameseText::strToLowerCase()
      * @param string $originalString
      * @param string $expectedString
